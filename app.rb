@@ -2,6 +2,7 @@
 # listed in Gemfile.
 require 'bundler'
 Bundler.require
+require 'json/pure'
 
 # Our data table
 all_things = [
