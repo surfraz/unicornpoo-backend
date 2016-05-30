@@ -6,14 +6,14 @@ require 'json/pure'
 
 # Our data table
 all_things = [
- { :name => "team1-lemonheads", :value => "incomplete" },
- { :name => "team2-teethbrains", :value => "incomplete" },
- { :name => "team3-scuzzbuckets", :value => "incomplete" },
- { :name => "team4-turniptoes", :value => "incomplete" },
- { :name => "team5-brainiacs", :value => "incomplete" },
- { :name => "team6-noddyears", :value => "incomplete" },
- { :name => "team7-fennelteeth", :value => "incomplete" },
- { :name => "team8-britneybums", :value => "incomplete" },
+ { :name => "team1-lemonheads", :value => "incomplete", :count => 0 },
+ { :name => "team2-teethbrains", :value => "incomplete", :count => 0 },
+ { :name => "team3-scuzzbuckets", :value => "incomplete", :count => 0 },
+ { :name => "team4-turniptoes", :value => "incomplete", :count => 0 },
+ { :name => "team5-brainiacs", :value => "incomplete", :count => 0 },
+ { :name => "team6-noddyears", :value => "incomplete", :count => 0 },
+ { :name => "team7-fennelteeth", :value => "incomplete", :count => 0 },
+ { :name => "team8-britneybums", :value => "incomplete", :count => 0 },
 ]
 
 get '/' do
@@ -42,7 +42,9 @@ end
 get '/update/:namevalue/:newvalue' do
   all_things.map! do |item|
     if item[:name] == params[:namevalue]
-      { :name => params[:namevalue], :value => params[:newvalue] }
+      { :name => params[:namevalue],
+        :value => params[:newvalue],
+        :count => item[:count] + 1 }
     else
       item
     end
@@ -53,7 +55,7 @@ get '/update/:namevalue/:newvalue' do
   end.first
 
   if @thing
-    "cheers"
+    @thing.to_json
   else
     halt 404, "sorry, check your team name"
   end
